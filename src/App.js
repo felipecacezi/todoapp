@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MdDelete } from 'react-icons/md';
 import './App.css';
 
 const App = () => {
@@ -6,6 +7,7 @@ const App = () => {
     const ESCAPE_KEY = 27;
     const ENTER_KEY = 13;
 
+    const [todos, setTodos] = useState([]);
     const [ value, setValue ]= useState('');
 
     const onChange = (event) => {
@@ -13,7 +15,13 @@ const App = () => {
     }
 
     const submit = () => {
-        console.log('submit', value);
+       
+        setTodos([...todos, {
+            id: new Date().getTime(),
+            title: value,
+            checked: false
+        }]);
+
         erase();
     }
 
@@ -55,6 +63,20 @@ const App = () => {
                     value={value}
                     onChange={onChange}
                     onKeyDown={onKeyDown}/>
+
+                <ul className='todo-list'>
+                    {
+                        todos.map((todo)=>(
+                            <li key={todo.id}>
+                                <span className='todo'>{todo.title}</span>
+                                <button className='remove'
+                                        type="button">
+                                    <MdDelete size={28}/>
+                                </button>
+                            </li>
+                        ))
+                    }
+                </ul>
 
             </section>
     
