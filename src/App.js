@@ -56,6 +56,12 @@ const App = () => {
         );
     }
 
+    const onRemove = (todo) => {
+
+        const newTodos = todos.filter((obj) => obj.id !== todo.id);
+        setTodos(newTodos);
+    }
+
     return (
     
         <section id='app' className='container'>
@@ -84,7 +90,8 @@ const App = () => {
                                     role='button'
                                     onKeyPress={()=>{onToggle(todo)}}>{todo.title}</span>
                                 <button className='remove'
-                                        type="button">
+                                        type="button"
+                                        onClick={() => { onRemove(todo) }}>
                                     <MdDelete size={28}/>
                                 </button>
                             </li>
