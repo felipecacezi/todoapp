@@ -45,6 +45,17 @@ const App = () => {
 
     }
 
+    const onToggle = (todo) => {
+
+        setTodos(
+            todos.map(
+                (obj) => obj.id === todo.id 
+                    ? { ...obj, checked: !todo.checked } 
+                    : obj 
+            )
+        );
+    }
+
     return (
     
         <section id='app' className='container'>
@@ -68,7 +79,10 @@ const App = () => {
                     {
                         todos.map((todo)=>(
                             <li key={todo.id}>
-                                <span className='todo'>{todo.title}</span>
+                                <span className={['todo', todo.checked ? 'checked' : ''].join(' ')}
+                                    onClick={()=>{onToggle(todo)}}
+                                    role='button'
+                                    onKeyPress={()=>{onToggle(todo)}}>{todo.title}</span>
                                 <button className='remove'
                                         type="button">
                                     <MdDelete size={28}/>
