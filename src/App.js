@@ -6,13 +6,7 @@ const App = () => {
 
     const ESCAPE_KEY = 27;
     const ENTER_KEY = 13;
-
-    const initialTodos = [
-        { id: 1, title: 'Estudar react', checked: false },
-        { id: 2, title: 'Estudar inglês', checked: true },
-        { id: 3, title: 'Estudar frances', checked: false }
-    ];
-    const [todos, setTodos] = useState(initialTodos);
+    const [todos, setTodos] = useState([]);
     const [ value, setValue ]= useState('');
 
     const onChange = (event) => {
@@ -20,7 +14,13 @@ const App = () => {
     }
 
     const submit = () => {
-        console.log('submit', value);
+        
+        setTodos([...todos, {
+            id: new Date().getTime(),
+            title: value,
+            checked: false
+        }]);
+
         erase();
     }
 
