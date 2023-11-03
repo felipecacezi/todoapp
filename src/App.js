@@ -1,65 +1,18 @@
 import React, { useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import './App.css';
+import NewTodo from './components/NewTodo'
 
 const App = () => {
 
-    const ESCAPE_KEY = 27;
-    const ENTER_KEY = 13;
+    const [todos, setTodos] = useState([]);    
 
-    const [todos, setTodos] = useState([]);
-    const [ value, setValue ]= useState('');
-
-    const onChange = (event) => {
-        setValue(event.target.value);
-    }
-
-    const submit = () => {
-       
+    const onNewTodo = (value) => {
         setTodos([...todos, {
             id: new Date().getTime(),
             title: value,
             checked: false
         }]);
-
-        erase();
-    }
-
-    const erase = () => {
-        setValue('');
-    }
-
-    const onKeyDown = (event) => {
-
-        switch (event.which) {
-            case ESCAPE_KEY:
-                erase();
-            break;
-            case ENTER_KEY:
-                submit();
-            break;
-            default:
-                return;
-            break;
-        }
-
-    }
-
-    const onToggle = (todo) => {
-
-        setTodos(
-            todos.map(
-                (obj) => obj.id === todo.id 
-                    ? { ...obj, checked: !todo.checked } 
-                    : obj 
-            )
-        );
-    }
-
-    const onRemove = (todo) => {
-
-        const newTodos = todos.filter((obj) => obj.id !== todo.id);
-        setTodos(newTodos);
     }
 
     return (
@@ -73,14 +26,7 @@ const App = () => {
             </header>
     
             <section className='main'>
-
-                <input 
-                    className='new-todo'
-                    placeholder='O que precisa ser feito?'
-                    value={value}
-                    onChange={onChange}
-                    onKeyDown={onKeyDown}/>
-
+                <NewTodo onNewTodo={onNewTodo} />
                 <ul className='todo-list'>
                     {
                         todos.map((todo)=>(
