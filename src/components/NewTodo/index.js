@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import './styles.css';
 
 const NewTodo = ({ onNewTodo }) => {
 
@@ -37,24 +39,7 @@ const NewTodo = ({ onNewTodo }) => {
         }
 
     }
-
-    const onToggle = (todo) => {
-
-        setTodos(
-            todos.map(
-                (obj) => obj.id === todo.id 
-                    ? { ...obj, checked: !todo.checked } 
-                    : obj 
-            )
-        );
-    }
-
-    const onRemove = (todo) => {
-
-        const newTodos = todos.filter((obj) => obj.id !== todo.id);
-        setTodos(newTodos);
-    }
-
+    
     return (
         <input 
             className='new-todo'
@@ -63,6 +48,10 @@ const NewTodo = ({ onNewTodo }) => {
             onChange={onChange}
             onKeyDown={onKeyDown}/>
     )
+};
+
+NewTodo.propTypes = {
+    onNewTodo: PropTypes.func.isRequired,
 };
 
 export default NewTodo;

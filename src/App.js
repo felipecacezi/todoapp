@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { MdDelete } from 'react-icons/md';
-import './App.css';
 import NewTodo from './components/NewTodo'
+import TodoList from './components/TodoList'
 
 const App = () => {
 
@@ -15,36 +14,36 @@ const App = () => {
         }]);
     }
 
+    const onToggle = (todo) => {
+
+        setTodos(
+            todos.map(
+                (obj) => obj.id === todo.id 
+                    ? { ...obj, checked: !todo.checked } 
+                    : obj 
+            )
+        );
+    }
+
+    const onRemove = (todo) => {
+
+        const newTodos = todos.filter((obj) => obj.id !== todo.id);
+        setTodos(newTodos);
+    }
+
     return (
     
         <section id='app' className='container'>
     
             <header>
-
                 <h1 className='title'>Todo App</h1>
-
             </header>
     
             <section className='main'>
                 <NewTodo onNewTodo={onNewTodo} />
-                <ul className='todo-list'>
-                    {
-                        todos.map((todo)=>(
-                            <li key={todo.id}>
-                                <span className={['todo', todo.checked ? 'checked' : ''].join(' ')}
-                                    onClick={()=>{onToggle(todo)}}
-                                    role='button'
-                                    onKeyPress={()=>{onToggle(todo)}}>{todo.title}</span>
-                                <button className='remove'
-                                        type="button"
-                                        onClick={() => { onRemove(todo) }}>
-                                    <MdDelete size={28}/>
-                                </button>
-                            </li>
-                        ))
-                    }
-                </ul>
-
+                <TodoList todos={todos} 
+                    onToggle={onToggle}
+                    onRemove={onRemove} />
             </section>
     
         </section>
